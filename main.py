@@ -1,17 +1,15 @@
-import osmnx as ox
-from loguru import logger
-from utils.geospatial_functions import pf
+import folium
 import json
-from geopy.geocoders import Nominatim
-import geocoder
+import math
+import networkx as nx
+import osmnx as ox
+from folium import plugins
+from loguru import logger
 from ortools.constraint_solver import routing_enums_pb2
 from ortools.constraint_solver import pywrapcp
 from utils.ortool_manager import ort
 from utils.folium_functions import mp
-import folium
-import math
-import networkx as nx
-from folium import plugins
+from utils.geospatial_functions import pf
 
 # Initialize map according to Istanbul
 m = folium.Map(location=[41, 28.57])

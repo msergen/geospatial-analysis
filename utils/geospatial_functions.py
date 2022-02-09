@@ -1,18 +1,13 @@
-from __future__ import print_function
-from ortools.constraint_solver import routing_enums_pb2
-from ortools.constraint_solver import pywrapcp
-import osmnx as ox
-import requests
+import geocoder
 import json
 import networkx as nx
-import folium
 import numpy as np
 import os.path
-from loguru import logger
-import geocoder
+import osmnx as ox
 import re
+import requests
 from collections import OrderedDict
-from collections import Counter
+from loguru import logger
 
 
 class Pathfinder:
