@@ -5,7 +5,6 @@ import osmnx as ox
 import requests
 import json
 import networkx as nx
-#from IPython.display import IFrame
 import folium
 import numpy as np
 import os.path
@@ -14,6 +13,7 @@ import geocoder
 import re
 from collections import OrderedDict
 from collections import Counter
+
 
 class Pathfinder:
 
@@ -37,7 +37,6 @@ class Pathfinder:
             ox.save_graphml(G, filepath=file_name)
             logger.info(f"Graph saved as {file_name}")
 
-    
     def load_graph(self, graph_file):
         if os.path.isfile(graph_file):
             logger.info("Graph data found. Loading...")
@@ -45,7 +44,6 @@ class Pathfinder:
             logger.info("Graph loaded")
         else:
             logger.error(f"There is no graph file called {graph_file}.")
-
 
     def get_overpass_data(self, filename, url, query):
         """ Imports data from Overpass API and saves it to a JSON file """
@@ -60,7 +58,6 @@ class Pathfinder:
         else:
             logger.info('Overpass data already exists, no need to create.')
 
-    
     def get_user_location_by_name(self):
         """ Finds the location of the user by using geocoding """
         geocoded_location = None
@@ -80,24 +77,21 @@ class Pathfinder:
         self.location = geocoded_location.json
         self.location["name"] = location_name
 
-
     def get_trip_days(self):
         """ Gets the number of days the user is staying in Istanbul """
         day_count = None
-        while(day_count is None) or (day_count <= 0):
+        while(day_count is None) or (day_count <= 0) or (day_count > 5):
             try:
-                day_count = int(input("How many days are you staying in Istanbul?:\n"))
+                day_count = int(input("How many days would you like to plan?(max 5):\n"))
             except ValueError:
                 logger.error("Please enter a number") 
             if day_count <= 0:
                 logger.error("Please enter a valid day count.")
             if day_count > 5:
-                user_confirmation = input("Are you sure you want to stay that long?(y/n)")
-                if user_confirmation.lower() == "n":
-                    day_count = -1
+                logger.error("Please enter a day count less than 6.")
+
         self.days = day_count
     
-
     def get_possible_touristic_places(self, json_file):
         """ Gets the list of all touristic places on OpenStreet Map """
         places = []
@@ -132,11 +126,11 @@ class Pathfinder:
                         "Rumeli Hisarı",
                         "Aya Nikola Rum Ortodoks Kilisesi",
                         "Sabancı Üniversitesi Sakıp Sabancı Müzesi",
+                        "Ortaköy Sanat Galerisi",
                         "İş Bankası Müzesi",
                         "AK Bank Sanat Galerisi",
                         "Adam Mickiewicz Müzesi",
                         "Barbaros Hayrettin Heykeli",
-                        "Ortaköy Sanat Galerisi",
                         "Binbirdirek Sarnıcı",
                         "Atatürk Heykeli",
                         "Atatürk Museum, Şişli",
@@ -197,7 +191,6 @@ class Pathfinder:
             return np.load("nearest_nodes.npy", allow_pickle=True).tolist()
         return nearest_nodes
 
-     
     def get_distance_matrix(self, nearest_nodes, filename):
         """ Find distance between nodes """
         if not os.path.isfile(filename):
@@ -220,6 +213,5 @@ class Pathfinder:
         else:
             distance_matrix = np.load("distance_matrix.npy", allow_pickle=True).tolist()
         self.distance_matrix = distance_matrix
-        #print(f"Not found count:{not_found}") 
 
 pf = Pathfinder()
