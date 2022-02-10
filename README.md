@@ -1,6 +1,6 @@
 # Geospatial Analysis Project
 ## Information
-This tool creates 1 to 5 day plans on a map for tourists visiting Istanbul, Turkey.
+This tool creates 1 to 5 day plans on a map for tourists visiting Istanbul, Turkey. Sample outputs and executions are provided in the **docs** folder.
 ## Execution guide
 - Make sure you have Fiona and GDAL .whl files in the directory.
 - Initialize a virtual environment and activate it:
