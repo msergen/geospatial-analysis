@@ -181,7 +181,7 @@ class Pathfinder:
 
             nearest_nodes = list(OrderedDict((frozenset(item.items()),item) for item in nearest_nodes).values())
 
-            np.save("nearest_nodes", nearest_nodes)
+            #np.save("nearest_nodes", nearest_nodes)
         else:
             return np.load("nearest_nodes.npy", allow_pickle=True).tolist()
         return nearest_nodes
@@ -204,7 +204,7 @@ class Pathfinder:
                             pass
                     distance_row.append(distance)
                 distance_matrix.append(distance_row)
-            np.save("distance_matrix", distance_matrix)
+            #np.save("distance_matrix", distance_matrix)
         else:
             distance_matrix = np.load("distance_matrix.npy", allow_pickle=True).tolist()
         self.distance_matrix = distance_matrix
